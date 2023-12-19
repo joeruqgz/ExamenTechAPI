@@ -1,5 +1,26 @@
 describe("Escenarios - getBooking",()=>{
     
+    let authToken=null;
+
+   before ("Creando token",()=>{
+
+    cy.request({
+        method: 'POST',
+        url: 'https://restful-booker.herokuapp.com/auth',
+        headers: {
+            'Content-Type' : 'application/json'
+        },
+        body:{
+            username: "admin",
+            password: "password123"
+        }
+    }).then((response) =>{
+        authToken=response.body.token;
+
+    });
+});
+
+
     it("1-Verificar los id de las reservas ",()=>{
 
         cy.request(
@@ -9,7 +30,8 @@ describe("Escenarios - getBooking",()=>{
                       
         })
         .then((response)=>{
-    
+            
+            
             const bookingId = Number(JSON.stringify(response.body.bookingId))
             
             cy.log('Verificar status 200');
@@ -26,9 +48,14 @@ describe("Escenarios - getBooking",()=>{
     it("2-Verificar la data obtenida de una reserva ",()=>{
 
         cy.request(
-    
-            { method: 'GET',
-            url: 'https://restful-booker.herokuapp.com/booking/99',
+            
+            
+            { 
+                
+            method: 'GET',
+            url: 'https://restful-booker.herokuapp.com/booking/1331',
+
+            
                       
         })
         .then((response)=>{
